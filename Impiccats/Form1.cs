@@ -5,6 +5,9 @@ namespace Impiccats
         public Form1()
         {
             InitializeComponent();
+            Invio.Enabled = false;
+            Invio2.Enabled = false;
+            Jolly.Enabled = false;
         }
 
         string parola = "";
@@ -12,9 +15,9 @@ namespace Impiccats
         int Punteggio = 0;
         Random g = new Random();
         int tentativi = 0;
-        char let;
-        char L, F, R;
+        char F;
         int Jollu = 2;
+        string parolaUtente = "";
 
         void inizializzaParola(string filePath, int t)
         {
@@ -22,23 +25,36 @@ namespace Impiccats
             int r = g.Next(linee.Length);
             parola = linee[r];
             tentativi = t;
-            T00.Text = tentativi.ToString();
             parolaI = new string('_', parola.Length).ToCharArray();
+            Punteggio = 0;
+            Jollu = 2;
             Parols.Text = new string(parolaI);
+            L07.Text = "0";
+            T00.Text = tentativi.ToString();
+            II.Text = Jollu.ToString();
+            Lista.Items.Clear();
+            L01.Text = "";
+            L02.Text = "";
+            Invio.Enabled = true;
+            Invio2.Enabled = true;
+            Jolly.Enabled = true;
         }
 
         void Controllo_Lettera(char L)
         {
-            bool letteraTrovata = false;
-
             if (tentativi == 0)
             {
                 MessageBox.Show("Hai esaurito i tentativi. La parola era: " + parola);
+                return;
             }
-            if (tentativi > 0 && L02.Text == parola.ToString())
+
+            if (L02.Text == parola)
             {
-                MessageBox.Show("Hai indovinato la parola ");
+                MessageBox.Show("Hai indovinato la parola, seleziona un nuovo pulsante");
+                return;
             }
+
+            bool letteraTrovata = false;
 
             for (int j = 0; j < parola.Length; j++)
             {
@@ -60,24 +76,36 @@ namespace Impiccats
                 tentativi -= 1;
                 T00.Text = tentativi.ToString();
             }
+
+            if (tentativi == 0)
+            {
+                MessageBox.Show("Hai esaurito i tentativi. La parola era: " + parola);
+                Invio.Enabled = false;
+                Invio2.Enabled = false;
+                Jolly.Enabled = false;
+            }
         }
         void Controllo_Parola()
         {
-            if (L02.Text == parola)
+            parolaUtente = L02.Text;
+
+            if (parolaUtente == parola)
             {
                 Parols.Text = parola;
-                MessageBox.Show("Complimenti! Hai indovinato la parola: " + parola);
+                MessageBox.Show("Hai completato il gioco, il tuo punteggio è di: " + Punteggio.ToString() + ".\nSeleziona una nuova categoria per continuare.");
             }
             else
             {
-                tentativi -= 1;
-                T00.Text = tentativi.ToString();
-                if (tentativi == 0)
-                {
-                    MessageBox.Show("Hai esaurito i tentativi. La parola era: " + parola);
-                }
+                tentativi = 0;
+                T00.Text = "0";
+                MessageBox.Show("Hai sbagliato. La parola era: " + parola + ".\nSeleziona una nuova categoria per continuare.");
             }
+
+            Invio.Enabled = false;
+            Invio2.Enabled = false;
+            Jolly.Enabled = false;
         }
+
         void Uso_Jolly()
         {
             if (Jollu > 0)
@@ -126,18 +154,36 @@ namespace Impiccats
         {
             inizializzaParola("Città.txt", 6);
         }
+
         private void Invio_Click(object sender, EventArgs e)
         {
-            F = L01.Text[0];
-            Controllo_Lettera(F);
-            Lista.Items.Add(L01.Text);
+            if (L01.Text != "")
+            {
+                F = L01.Text[0];
+                Controllo_Lettera(F);
+                Lista.Items.Add(L01.Text);
+                L01.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Inserisci una lettera.");
+            }
         }
 
         private void Invio2_Click(object sender, EventArgs e)
         {
-            Controllo_Parola();
-            Lista.Items.Add(L02.Text);
+            if (L02.Text != "")
+            {
+                Lista.Items.Add(L02.Text);
+                Controllo_Parola();
+                L02.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Inserisci una parola.");
+            }
         }
+
         private void Jolly_Click(object sender, EventArgs e)
         {
             Uso_Jolly();

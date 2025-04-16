@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Impiccats")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6996555acd10a7f102c61b63ed137bba3119026")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57e451d1a464f835f7cb971c124c72c0bec5f29c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Impiccats")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Impiccats")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
